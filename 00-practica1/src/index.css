@@ -7,3 +7,9 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
