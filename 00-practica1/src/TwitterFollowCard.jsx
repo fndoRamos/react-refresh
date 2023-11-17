@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 export function TwitterFollowCard({
@@ -27,7 +28,7 @@ export function TwitterFollowCard({
         <div className="tw-followCard-info">
           <strong>{name}</strong>
           <span className="tw-followCard-infoUserName">
-            @{formatUserName(userName)}
+            {formatUserName(userName)}
           </span>
         </div>
       </header>
