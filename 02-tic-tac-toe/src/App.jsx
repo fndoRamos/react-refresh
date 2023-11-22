@@ -2,67 +2,21 @@
 import { useState } from "react"
 import confetti from "canvas-confetti"
 
-const TURNS = {
-  X: 'x',
-  O: 'o'
-}
+import { Square } from "./components/Square.jsx"
+import { WinnerModal } from "./components/WinnerModal.jsx"
+import { TURNS } from "./constans.js"
+import { checkWinnerFrom, checkEndGame } from "./logic/board.js"
 
-const WINNER_COMBOS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
-
-
-const Square = ({children, isSelected, updateBoard, index}) => {
-  const className =  `square ${isSelected ? 'is-selected' : ''}` 
-
-  const handleOnClick = () => {
-    updateBoard(index)
-  }
-  return (
-    <div className={className} onClick={handleOnClick}>
-      {children}
-    </div>
-  )
-}
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null))
   const [turn, setTurn] = useState(TURNS.X)
   const [winner, setWinner] = useState(null) //null = no hay ganador, false = hay un empate
 
-  const checkWinner = (boardToCheck) => {
-    //revisamos todas las combinaciones ganadoras
-    //para ver si X o O ganó
-    for (const combo of WINNER_COMBOS) {
-      const [a, b, c] = combo
-      if (
-        boardToCheck[a] && 
-        boardToCheck[a] === boardToCheck[b] && 
-        boardToCheck[a] === boardToCheck[c]
-        ) {
-          return boardToCheck[a]
-        }
-      }
-      //si no hay ganador
-      return null
-  }
-
   const resetGame = () => {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
-  }
-
-  const checkEndGame = (newBoard) => {
-    //si no hay más espacios vacíos en el tablero
-    return newBoard.every(square => square !== null)
   }
 
   const updateBoard = (index) => {
@@ -79,7 +33,7 @@ function App() {
     setTurn(newTurn)
 
     //revisar si hay ganador
-    const newWinner = checkWinner(newBoard)
+    const newWinner = checkWinnerFrom(newBoard)
     if (newWinner) {
       confetti()
       setWinner(newWinner)
@@ -114,29 +68,7 @@ function App() {
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
 
-      {
-        winner !== null && (
-          <section className="winner">
-            <div className="text">
-              <h2>
-                {
-                  winner === false 
-                    ? 'Empate'
-                    : 'Ganó: '
-                }
-              </h2>
-
-              <header className="win">
-                {winner && <Square>{winner}</Square>}
-              </header>
-
-              <footer>
-                <button onClick={resetGame}>Empezar de nuevo</button>
-              </footer>
-            </div>
-          </section>
-        )
-      }
+      <WinnerModal winner={winner} resetGame={resetGame}/>
     </main>
   )
 }
