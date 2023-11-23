@@ -27,7 +27,7 @@ function App() {
     setWinner(null);
 
     //borramos info guardad en localStorage
-    resetGameStorage()
+    resetGameStorage();
   };
 
   const updateBoard = (index) => {
@@ -44,7 +44,7 @@ function App() {
     setTurn(newTurn);
 
     //guardar partida en localStorage
-    saveGameToStorage({board: newBoard, turn: newTurn})
+    saveGameToStorage({ board: newBoard, turn: newTurn });
 
     //revisar si hay ganador
     const newWinner = checkWinnerFrom(newBoard);

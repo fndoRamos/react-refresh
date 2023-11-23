@@ -17,7 +17,7 @@ export const checkWinnerFrom = (boardToCheck) => {
   return null;
 };
 
- export const checkEndGame = (newBoard) => {
+export const checkEndGame = (newBoard) => {
   //si no hay más espacios vacíos en el tablero
   return newBoard.every((square) => square !== null);
 };
