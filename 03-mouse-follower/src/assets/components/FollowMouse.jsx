@@ -3,6 +3,15 @@ import { useState, useEffect } from "react";
 export function FollowMouse() {
   const [enabled, setEnabled] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0.8);
+
+  useEffect(() => {
+    if (enabled === false) {
+      setOpacity(0);
+    } else {
+      setOpacity(0.8);
+    }
+  }, [enabled]);
 
   useEffect(() => {
     const handleMove = (event) => {
@@ -29,7 +38,7 @@ export function FollowMouse() {
           position: "absolute",
           backgroundColor: "#09F",
           borderRadius: "50%",
-          opacity: 0.8,
+          opacity: opacity,
           pointerEvents: "none",
           top: -20,
           left: -20,
