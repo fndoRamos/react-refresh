@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './App.css'
 
 const RANDOM_FACT_FROM_API = 'https://catfact.ninja/fact'
 // const RANDOM_IMAGE_FROM_API = `https://cataas.com/cat/says/${firstWord}?fontSize=50&fontColor=red&json=true`
@@ -16,7 +17,7 @@ export function App () {
 
         const firstThreeWords = fact.split(' ').slice(0, 3).join(' ')
 
-        fetch(`https://cataas.com/cat/says/${firstThreeWords}?fontSize=50&fontColor=red`)
+        fetch(`https://cataas.com/cat/says/${firstThreeWords}?fontSize=50&fontColor=green`)
           .then(res => {
             console.log(res)
             const { url } = res
@@ -36,8 +37,10 @@ export function App () {
   return (
     <main>
       <h1>App de gatitos</h1>
-      {fact && <h2>{fact}</h2>}
-      {imageUrl && <img src={imageUrl} alt={`Image extracted using the first three words of ${fact}`} loading='lazy' />}
+      <section>
+        {fact && <h2>{fact}</h2>}
+        {imageUrl && <img src={imageUrl} alt={`Image extracted using the first three words of ${fact}`} loading='lazy' />}
+      </section>
     </main>
   )
 }
